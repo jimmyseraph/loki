@@ -4,16 +4,17 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  favicon: "/favicon.ico",
+  favicon: '/favicon.ico',
   routes: [
     {
       exact: true,
-      path: "/login",
+      path: '/login',
       component: '@/pages/login/index',
     },
     {
       path: '/',
       component: '@/layouts/index',
+      wrappers: ['@/wrappers/auth'],
       routes: [
         {
           path: '/',
@@ -56,15 +57,14 @@ export default defineConfig({
         },
       ],
     },
-
   ],
   fastRefresh: {},
   mfsu: {
     development: {
-      output: "./.mfsu-dev",
+      output: './.mfsu-dev',
     },
     production: {
-      output: "./.mfsu-prod",
-    }
+      output: './.mfsu-prod',
+    },
   },
 });

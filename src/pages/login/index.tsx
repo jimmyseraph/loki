@@ -1,10 +1,16 @@
-
+import './login.css';
+import LoginForm from './loginForm';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 function Login() {
-    return (
-        <div>
-            <h1>Login Page</h1>
-        </div>
-    )
+  const client = new ApolloClient({
+    uri: '/apiv4',
+    cache: new InMemoryCache(),
+  });
+  return (
+    <ApolloProvider client={client}>
+      <LoginForm />
+    </ApolloProvider>
+  );
 }
 
 export default Login;

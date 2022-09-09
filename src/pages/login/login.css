@@ -1,0 +1,31 @@
+
+.login-page {
+    padding-top: 140px;
+	background-color: #f7f9fb;
+	font-size: 14px;
+    height: 100%;
+}
+
+.login-card {
+    width: 500px;
+    margin: 0 auto;
+    border: 1px outset rgba(200, 209, 189, 0.75);
+    box-shadow: 2px 8px 12px rgba(68, 65, 65, 0.25);
+}
+
+.login-card-layout {
+    margin: -20px auto;
+    width: 500px;
+}
+
+.login-logo {
+    width: 90px;
+	height: 90px;
+	overflow: hidden;
+	border-radius: 50%;
+	margin: 0 auto;
+	box-shadow: 0 4px 8px rgba(0,0,0,.05);
+    background-color: white;
+	position: relative;
+	z-index: 999999;
+}
