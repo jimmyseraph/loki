@@ -43,7 +43,7 @@ const Pilot: React.FC = (props: any) => {
     useLazyQuery<{ ScriptList: ScriptListReply[] }, ScriptListVariables>(
       api.getScriptList,
     );
-  const [startPilot] = useLazyQuery<
+  const [, { loading: _loading, refetch: startPilot }] = useLazyQuery<
     { StartPilot: StartPilotReply },
     { startPilotRequest: StartPilotVariables }
   >(api.startPilot);
@@ -96,20 +96,20 @@ const Pilot: React.FC = (props: any) => {
       duration,
       agents,
     };
-    startPilot({ variables: { startPilotRequest: { ...payload } } })
+    startPilot({ startPilotRequest: { ...payload } })
       .then((res) => {
-        if (res.error) {
-          message.error(res.error.message);
-          if (res.error.message === 'auth failed') {
+        console.log(res);
+        if (res.errors) {
+          message.error(res.errors[0].message);
+          if (res.errors[0].message === 'auth failed') {
             history.push('/login');
           }
-          return;
         }
-        if (res.data && res.data.StartPilot) {
+        if (res.data && res.data.StartPilot && res.data.StartPilot.id) {
           message.success('Start Pilot Success');
           history.push({
-            pathname: '/report',
-            query: { id: res.data?.StartPilot.id },
+            pathname: '/report/detail',
+            query: { id: res.data.StartPilot.id },
           });
         }
       })

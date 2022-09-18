@@ -131,6 +131,9 @@ const AgentListModal: React.FC<AgentListModalProps> = (
               props.onChange(selectedRows);
             }
           },
+          getCheckboxProps: (record) => ({
+            disabled: record.status !== AgentStatus.IDLE,
+          }),
         }}
       />
     </Modal>
