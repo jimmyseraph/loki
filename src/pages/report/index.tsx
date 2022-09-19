@@ -1,22 +1,8 @@
-import {
-  Button,
-  Col,
-  DatePicker,
-  Form,
-  Input,
-  message,
-  Row,
-  Select,
-  Space,
-  Table,
-} from 'antd';
+import { Button, Col, DatePicker, Form, Input, Row, Select, Space } from 'antd';
 import moment from 'moment';
-import React, { useState } from 'react';
-import { ReportStatus, statusTag } from './interface.d';
-import { history, Link } from 'umi';
-import { api, ReportListReply, ReportListVariables } from '@/api/Api4Config';
-import type { ColumnsType } from 'antd/lib/table';
-import { useLazyQuery } from '@apollo/client';
+import React from 'react';
+import { ReportStatus } from './interface.d';
+import { history } from 'umi';
 import ReportTable from './report_table';
 
 interface SearchParam {
