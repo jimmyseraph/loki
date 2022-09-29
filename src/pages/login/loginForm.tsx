@@ -2,17 +2,16 @@ import './login.css';
 import Logo from '@/loki_small.jpg';
 import { Form, Input, Space, Button, message } from 'antd';
 import { history } from 'umi';
-// import Request from '@/utils/Request';
 import { useLazyQuery } from '@apollo/client';
 import { api, SignOnReply, SignOnVariables } from '@/api/Api4Config';
-// import React from 'react';
 
 function LoginForm() {
   const [form] = Form.useForm();
 
-  const [login] = useLazyQuery<{ SignOn: SignOnReply }, SignOnVariables>(
-    api.login,
-  );
+  const [, { refetch: login }] = useLazyQuery<
+    { SignOn: SignOnReply },
+    SignOnVariables
+  >(api.login);
 
   const handleSubmit = () => {
     form.submit();
@@ -21,11 +20,11 @@ function LoginForm() {
   const handleFinish = () => {
     const user = form.getFieldValue('user');
     const password = form.getFieldValue('password');
-    login({ variables: { user, password } })
+    login({ user, password })
       .then((res) => {
         console.log(res.data);
-        if (res.error) {
-          message.error(res.error.message);
+        if (res.errors) {
+          message.error(res.errors[0].message);
           return;
         }
         message.success('登录成功');
@@ -39,23 +38,6 @@ function LoginForm() {
       .catch((err) => {
         message.error(err.message);
       });
-    // Request({
-    //     url: '/api/user/login',
-    //     method: 'post',
-    //     data: {
-    //         user,
-    //         password,
-    //     },
-    // }, (res) => {
-    //     localStorage.setItem('token', res.data.data.token);
-    //     localStorage.setItem('name', res.data.data.name);
-    //     localStorage.setItem('id', res.data.data.id);
-    //     localStorage.setItem('email', res.data.data.email);
-    //     localStorage.setItem('mobile', res.data.data.mobile);
-    //     history.push({
-    //         pathname: '/',
-    //     });
-    // });
   };
 
   const handleReset = () => {
