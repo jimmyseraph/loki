@@ -75,6 +75,7 @@ export interface ScriptSaveVariables {
   id?: string;
   name: string;
   script: string;
+  csvTempFilenames?: string[];
 }
 
 export interface ReportListReply {
@@ -200,7 +201,27 @@ export interface ScriptDebugReply {
 }
 
 export interface ScriptDebugVariables {
+  id?: string;
   script: string;
+  csvTempFilenames?: string[];
+}
+
+export interface CsvUploadVariables {
+  file: File;
+  name: string;
+}
+
+export interface CsvUploadReply {
+  temp: string;
+}
+
+export interface CsvRemoveVariables {
+  id?: string;
+  filename: string;
+}
+
+export interface CsvRemoveReply {
+  success: boolean;
 }
 
 export const api = {
@@ -376,9 +397,33 @@ export const api = {
   `,
 
   subscriptionDebug: gql`
-    subscription ScriptDebug($script: String!) {
-      ScriptDebug(script: $script) {
+    subscription ScriptDebug(
+      $id: String
+      $script: String!
+      $csvTempFilenames: [String]
+    ) {
+      ScriptDebug(
+        id: $id
+        script: $script
+        csvTempFilenames: $csvTempFilenames
+      ) {
         message
+      }
+    }
+  `,
+
+  uploadCsvFile: gql`
+    mutation CsvUpload($csvUploadRequest: CsvUploadRequest!) {
+      CsvUpload(csvUploadRequest: $csvUploadRequest) {
+        temp
+      }
+    }
+  `,
+
+  removeCsvFile: gql`
+    mutation CsvRemove($csvRemoveRequest: CsvRemoveRequest!) {
+      CsvRemove(csvRemoveRequest: $csvRemoveRequest) {
+        success
       }
     }
   `,

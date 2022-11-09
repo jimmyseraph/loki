@@ -39,9 +39,10 @@ import DebugModal from './debug_modal';
 
 export interface ScriptFormProps {
   key?: React.Key;
+  scriptId?: string;
   doc: XMLDocument;
   xmlNode: Element | null;
-  onChange?: (xml: Element) => void;
+  onChange?: (xml: Element, uploadFiles?: string[]) => void;
 }
 export interface ScriptTreeDataNode extends DataNode {
   type: string;
@@ -85,7 +86,7 @@ const CreateOrUpdateScript: React.FC = (props: any) => {
   const [scriptXML, setScriptXML] = useState<XMLDocument>(initScriptXML());
   const [currentForm, setCurrentForm] = useState<ReactNode>(initCurrentForm());
   const [loadData, setLoadData] = useState<number>(0);
-
+  const [uploadFiles, setUploadFiles] = useState<string[]>([]);
   const [debug, setDebug] = useState<boolean>(false);
 
   const [getScriptDetail] = useLazyQuery<
@@ -140,6 +141,7 @@ const CreateOrUpdateScript: React.FC = (props: any) => {
           id: query?.id,
           name: script_name as string,
           script: new XMLSerializer().serializeToString(scriptXML),
+          csvTempFilenames: uploadFiles,
         },
       },
     })
@@ -152,6 +154,7 @@ const CreateOrUpdateScript: React.FC = (props: any) => {
           return;
         }
         message.success('Save script successed');
+        setUploadFiles([]);
       })
       .catch((err) => {
         message.error(err.message);
@@ -387,7 +390,7 @@ const CreateOrUpdateScript: React.FC = (props: any) => {
     }
   };
 
-  const handleChange = (xml: Element) => {
+  const handleChange = (xml: Element, uploadFiles?: string[]) => {
     let td = [...treeData];
     let script = scriptXML;
 
@@ -400,6 +403,9 @@ const CreateOrUpdateScript: React.FC = (props: any) => {
     });
     setScriptXML(script);
     setTreeData(td);
+    if (uploadFiles) {
+      setUploadFiles(uploadFiles);
+    }
   };
 
   const handleSelect = (
@@ -419,6 +425,8 @@ const CreateOrUpdateScript: React.FC = (props: any) => {
         setCurrentForm(
           <PlanForm
             doc={scriptXML}
+            scriptId={props?.location?.query?.id}
+            fileList={uploadFiles}
             xmlNode={element}
             onChange={handleChange}
             key={info.node.key}
@@ -740,7 +748,9 @@ const CreateOrUpdateScript: React.FC = (props: any) => {
       {debug ? (
         <DebugModal
           title="Console Output"
+          scriptId={props?.location?.query?.id}
           script={new XMLSerializer().serializeToString(scriptXML)}
+          tempCsvFiles={uploadFiles.length > 0 ? uploadFiles : undefined}
           onClose={handleCloseDebug}
         />
       ) : (

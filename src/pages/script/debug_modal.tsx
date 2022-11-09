@@ -14,7 +14,9 @@ interface LogType {
 
 interface DebugModalProps {
   title: string;
+  scriptId?: string;
   script: string;
+  tempCsvFiles?: string[];
   onClose?: () => void;
 }
 const DebugModal: React.FC<DebugModalProps> = (props: DebugModalProps) => {
@@ -28,7 +30,11 @@ const DebugModal: React.FC<DebugModalProps> = (props: DebugModalProps) => {
     { ScriptDebug: ScriptDebugReply },
     ScriptDebugVariables
   >(api.subscriptionDebug, {
-    variables: { script: props.script },
+    variables: {
+      id: props.scriptId,
+      script: props.script,
+      csvTempFilenames: props.tempCsvFiles,
+    },
     onSubscriptionData: (
       options: OnSubscriptionDataOptions<{ ScriptDebug: ScriptDebugReply }>,
     ) => {
