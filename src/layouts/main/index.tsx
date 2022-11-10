@@ -1,13 +1,15 @@
 import { PageContainer, ProLayout, ProSettings } from '@ant-design/pro-layout';
-import { Avatar, message, Popover, Space } from 'antd';
+import { Avatar, Button, message, Popover, Space } from 'antd';
 import React from 'react';
 import menuProps from './MenuProps';
 import Logo from '@/loki_pure.jpg';
 import { Link } from 'umi';
-import { UserOutlined } from '@ant-design/icons';
+// import { UserOutlined } from '@ant-design/icons';
+import avatar from '@/avatar.jpg';
 import { history } from 'umi';
 import { api, SignOffReply } from '@/api/Api4Config';
 import { useLazyQuery } from '@apollo/client';
+import { clearUserInfo } from '@/utils/Storage';
 
 const MainLayout: React.FC = (props: any) => {
   const [pathname, setPathname] = React.useState(window.location.pathname);
@@ -24,11 +26,12 @@ const MainLayout: React.FC = (props: any) => {
   const handleLogout = () => {
     logout()
       .then(() => {
-        localStorage.removeItem('token');
-        history.push('/login');
+        clearUserInfo();
+        history.push('');
       })
       .catch((err) => {
         message.error(err.message);
+        clearUserInfo();
       });
   };
   return (
@@ -50,14 +53,24 @@ const MainLayout: React.FC = (props: any) => {
           {dom}
         </Link>
       )}
-      rightContentRender={() => (
-        <Popover content={<a onClick={handleLogout}>退出登录</a>}>
-          <Space>
-            <Avatar shape="square" size="small" icon={<UserOutlined />} />
-            {localStorage.getItem('name')}
-          </Space>
-        </Popover>
-      )}
+      rightContentRender={() => {
+        if (localStorage.getItem('token') && localStorage.getItem('name')) {
+          return (
+            <Popover content={<a onClick={handleLogout}>退出登录</a>}>
+              <Space>
+                <Avatar shape="square" size="small" src={avatar} />
+                {localStorage.getItem('name')}
+              </Space>
+            </Popover>
+          );
+        } else {
+          return (
+            <Button type="link" onClick={() => history.push('/login')}>
+              Sign In
+            </Button>
+          );
+        }
+      }}
       {...settings}
     >
       <PageContainer>{props.children}</PageContainer>

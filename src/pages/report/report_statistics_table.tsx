@@ -53,9 +53,9 @@ const ReportStatisticTable: React.FC<ReportStatisticTableProps> = (
 
   if (error) {
     message.error(error.message);
-    if (error.message === 'auth failed') {
-      history.push('/login');
-    }
+    // if (error.message === 'auth failed') {
+    //   history.push('/login');
+    // }
   }
 
   if (props && props.polling) {

@@ -33,9 +33,9 @@ const AgentListModal: React.FC<AgentListModalProps> = (
         .then((res) => {
           if (res.errors) {
             message.error(res.errors[0].message);
-            if (res.errors[0].message === 'auth failed') {
-              history.push('/login');
-            }
+            // if (res.errors[0].message === 'auth failed') {
+            //   history.push('/login');
+            // }
           }
           if (res.data && res.data.AgentList) {
             let data = res.data.AgentList;

@@ -54,9 +54,9 @@ const ReportCharts: React.FC<ReportChartsProps> = (
         .then((res) => {
           if (res.error) {
             message.error(res.error.message);
-            if (res.error.message === 'auth failed') {
-              history.push('/login');
-            }
+            // if (res.error.message === 'auth failed') {
+            //   history.push('/login');
+            // }
             return;
           }
           if (

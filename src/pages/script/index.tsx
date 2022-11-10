@@ -53,7 +53,7 @@ const Script: React.FC = (props: any) => {
     form.setFieldsValue({
       name: undefined,
       creator: undefined,
-      createTime: undefined,
+      updateTime: undefined,
     });
   };
 

@@ -52,9 +52,9 @@ const DebugModal: React.FC<DebugModalProps> = (props: DebugModalProps) => {
 
   if (error) {
     message.error(error.message);
-    if (error.message === 'auth failed') {
-      history.push('/login');
-    }
+    // if (error.message === 'auth failed') {
+    //   history.push('/login');
+    // }
   }
 
   const logLevel = (level: string) => {

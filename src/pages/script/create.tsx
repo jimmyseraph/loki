@@ -106,9 +106,9 @@ const CreateOrUpdateScript: React.FC = (props: any) => {
           // console.log(res)
           if (res.error) {
             message.error(res.error.message);
-            if (res.error.message === 'auth failed') {
-              history.push('/login');
-            }
+            // if (res.error.message === 'auth failed') {
+            //   history.push('/login');
+            // }
             return;
           }
           let xmlStr: string = res.data?.ScriptDetail.script as string;
@@ -123,9 +123,9 @@ const CreateOrUpdateScript: React.FC = (props: any) => {
         })
         .catch((err) => {
           message.error(err.message);
-          if (err.message === 'auth failed') {
-            history.push('/login');
-          }
+          // if (err.message === 'auth failed') {
+          //   history.push('/login');
+          // }
         });
     }
   }, [loadData]);
@@ -148,9 +148,9 @@ const CreateOrUpdateScript: React.FC = (props: any) => {
       .then((res) => {
         if (res.errors && res.errors.length > 0) {
           message.error(res.errors[0].message);
-          if (res.errors[0].message === 'auth failed') {
-            history.push('/login');
-          }
+          // if (res.errors[0].message === 'auth failed') {
+          //   history.push('/login');
+          // }
           return;
         }
         message.success('Save script successed');
@@ -158,9 +158,9 @@ const CreateOrUpdateScript: React.FC = (props: any) => {
       })
       .catch((err) => {
         message.error(err.message);
-        if (err.message === 'auth failed') {
-          history.push('/login');
-        }
+        // if (err.message === 'auth failed') {
+        //   history.push('/login');
+        // }
       });
   };
 

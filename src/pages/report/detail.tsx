@@ -19,9 +19,9 @@ const ReportDetail: React.FC = (props: any) => {
 
   if (error) {
     message.error(error.message);
-    if (error.message === 'auth failed') {
-      history.push('/login');
-    }
+    // if (error.message === 'auth failed') {
+    //   history.push('/login');
+    // }
   }
 
   if (data && data.ReportInfo.status === ReportStatus.RUNNING) {

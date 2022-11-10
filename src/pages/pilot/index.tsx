@@ -54,9 +54,9 @@ const Pilot: React.FC = (props: any) => {
         .then((res) => {
           if (res.errors && res.errors.length > 0) {
             message.error(res.errors[0].message);
-            if (res.errors[0].message === 'auth failed') {
-              history.push('/login');
-            }
+            // if (res.errors[0].message === 'auth failed') {
+            //   message('auth failed');
+            // }
             return;
           }
           if (res.data && res.data.ScriptList.length > 0) {
@@ -98,12 +98,12 @@ const Pilot: React.FC = (props: any) => {
     };
     startPilot({ startPilotRequest: { ...payload } })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.errors) {
           message.error(res.errors[0].message);
-          if (res.errors[0].message === 'auth failed') {
-            history.push('/login');
-          }
+          // if (res.errors[0].message === 'auth failed') {
+          //   history.push('/login');
+          // }
         }
         if (res.data && res.data.StartPilot && res.data.StartPilot.id) {
           message.success('Start Pilot Success');
@@ -186,9 +186,9 @@ const Pilot: React.FC = (props: any) => {
         .then((res) => {
           if (res.errors && res.errors.length > 0) {
             message.error(res.errors[0].message);
-            if (res.errors[0].message === 'auth failed') {
-              history.push('/login');
-            }
+            // if (res.errors[0].message === 'auth failed') {
+            //   history.push('/login');
+            // }
             return;
           } else {
             let d = callback(res);

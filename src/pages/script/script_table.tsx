@@ -35,9 +35,9 @@ const ScriptTable: React.FC<ScriptTableProps> = (props: ScriptTableProps) => {
 
   if (error) {
     message.error(error.message);
-    if (error.message === 'auth failed') {
-      history.push('/login');
-    }
+    // if (error.message === 'auth failed') {
+    //   history.push('/login');
+    // }
   }
 
   const columns: ColumnsType<ScriptData> = [
@@ -86,9 +86,9 @@ const ScriptTable: React.FC<ScriptTableProps> = (props: ScriptTableProps) => {
       .then((res) => {
         if (res.errors && res.errors.length > 0) {
           message.error(res.errors[0].message);
-          if (res.errors[0].message === 'auth failed') {
-            history.push('/login');
-          }
+          // if (res.errors[0].message === 'auth failed') {
+          //   history.push('/login');
+          // }
           return;
         }
         if (res.data?.ScriptRemove.success) {

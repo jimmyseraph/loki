@@ -167,9 +167,9 @@ const PlanForm: React.FC<PlanProps> = (props: PlanProps) => {
             if (res.errors && res.errors.length > 0) {
               console.log(res.errors);
               message.error(res.errors[0].message);
-              if (res.errors[0].message === 'auth failed') {
-                history.push('/login');
-              }
+              // if (res.errors[0].message === 'auth failed') {
+              //   history.push('/login');
+              // }
             }
             message.success(`${name} file remove successfully`);
             uploadFiles.delete(name);
@@ -180,10 +180,10 @@ const PlanForm: React.FC<PlanProps> = (props: PlanProps) => {
           .catch((err) => {
             removeParamElement(xmlNode!, 'csv', name);
             message.error(err.message);
-            console.log(err);
-            if (err.message === 'auth failed') {
-              history.push('/login');
-            }
+            // console.log(err);
+            // if (err.message === 'auth failed') {
+            //   history.push('/login');
+            // }
             return false;
           });
       }
@@ -232,9 +232,9 @@ const PlanForm: React.FC<PlanProps> = (props: PlanProps) => {
           if (res.errors && res.errors.length > 0) {
             console.log(res.errors);
             message.error(res.errors[0].message);
-            if (res.errors[0].message === 'auth failed') {
-              history.push('/login');
-            }
+            // if (res.errors[0].message === 'auth failed') {
+            //   history.push('/login');
+            // }
           }
           message.success(`${f.name} file uploaded successfully`);
           console.log(res.data?.CsvUpload);
@@ -245,10 +245,10 @@ const PlanForm: React.FC<PlanProps> = (props: PlanProps) => {
         })
         .catch((err) => {
           message.error(err.message);
-          console.log(err);
-          if (err.message === 'auth failed') {
-            history.push('/login');
-          }
+          // console.log(err);
+          // if (err.message === 'auth failed') {
+          //   history.push('/login');
+          // }
           onError ? onError(err) : null;
         });
 
