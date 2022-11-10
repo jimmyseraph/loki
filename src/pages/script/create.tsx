@@ -1,4 +1,14 @@
-import { Tree, Menu, Dropdown, Row, Col, Button, Space, message } from 'antd';
+import {
+  Tree,
+  Menu,
+  Dropdown,
+  Row,
+  Col,
+  Button,
+  Space,
+  message,
+  MenuProps,
+} from 'antd';
 import type { DataNode, EventDataNode, TreeProps } from 'antd/lib/tree';
 import type { ItemType } from 'antd/lib/menu/hooks/useItems';
 import type { MenuInfo } from 'rc-menu/lib/interface';
@@ -732,7 +742,7 @@ const CreateOrUpdateScript: React.FC = (props: any) => {
             titleRender={(node): ReactNode => {
               return (
                 <Dropdown
-                  overlay={<Menu items={dymMenu(node, handleMenuClick)} />}
+                  menu={dymMenu(node, handleMenuClick)}
                   trigger={['contextMenu']}
                 >
                   <div className={node.enabled ? 'enabled' : 'disabled'}>
@@ -818,121 +828,111 @@ const dymMenu = (
     node: ScriptTreeDataNode,
     label: string,
   ) => void,
-): ItemType[] => {
-  return [
-    // {
-    //     key: "Threads",
-    //     label: "Add Threads",
-    //     disabled: node && Object(SCRIPT_NODE_RULE)[node.category]? !Object(SCRIPT_NODE_RULE)[node.category].includes("Thread") : false,
-    //     children: [
-    //         {
-    //             key: "ThreadGroup",
-    //             label: "Thread Group",
-    //             onClick: (obj) => clickHandler(obj, node, "Thread Group"),
-    //         },
-    //     ],
-    // },
-    {
-      key: 'Controllers',
-      label: 'Add Controllers',
-      disabled:
-        node && Object(SCRIPT_NODE_RULE)[node.category]
-          ? !Object(SCRIPT_NODE_RULE)[node.category].includes('Controller')
-          : false,
-      children: [
-        {
-          key: 'LoopController',
-          label: 'Loop Controller',
-          onClick: (obj) => clickHandler(obj, node, 'Loop Controller'),
-        },
-        {
-          key: 'IfController',
-          label: 'If Controller',
-          onClick: (obj) => clickHandler(obj, node, 'If Controller'),
-        },
-      ],
-    },
-    {
-      key: 'Samplers',
-      label: 'Add Samplers',
-      disabled:
-        node && Object(SCRIPT_NODE_RULE)[node.category]
-          ? !Object(SCRIPT_NODE_RULE)[node.category].includes('Sampler')
-          : false,
-      children: [
-        {
-          key: 'HTTPSampler',
-          label: 'HTTP Sampler',
-          onClick: (obj) => clickHandler(obj, node, 'HTTP Sampler'),
-        },
-        {
-          key: 'HelloSampler',
-          label: 'Hello Sampler',
-          onClick: (obj) => clickHandler(obj, node, 'Hello Sampler'),
-        },
-      ],
-    },
-    {
-      key: 'Config',
-      label: 'Add Config',
-      disabled:
-        node && Object(SCRIPT_NODE_RULE)[node.category]
-          ? !Object(SCRIPT_NODE_RULE)[node.category].includes('Config')
-          : false,
-      children: [
-        {
-          key: 'Variable',
-          label: 'Variable',
-          onClick: (obj) => clickHandler(obj, node, 'Variable'),
-        },
-      ],
-    },
-    {
-      key: 'PostProcessor',
-      label: 'Add PostProcessor',
-      disabled:
-        node && Object(SCRIPT_NODE_RULE)[node.category]
-          ? !Object(SCRIPT_NODE_RULE)[node.category].includes('PostProcessor')
-          : false,
-      children: [
-        {
-          key: 'RegExpExtractor',
-          label: 'RegExp Extractor',
-          onClick: (obj) => clickHandler(obj, node, 'RegExp Extractor'),
-        },
-        {
-          key: 'JSONPathExtractor',
-          label: 'JSON-Path Extractor',
-          onClick: (obj) => clickHandler(obj, node, 'JSON-Path Extractor'),
-        },
-      ],
-    },
-    {
-      key: 'Assertion',
-      label: 'Add Assertion',
-      disabled:
-        node && Object(SCRIPT_NODE_RULE)[node.category]
-          ? !Object(SCRIPT_NODE_RULE)[node.category].includes('Assertion')
-          : false,
-      children: [
-        {
-          key: 'ResponseAssertion',
-          label: 'Response Assertion',
-          onClick: (obj) => clickHandler(obj, node, 'Response Assertion'),
-        },
-      ],
-    },
-    {
-      key: 'Enable',
-      label: node.enabled ? 'Disable' : 'Enable',
-      onClick: (obj) => clickHandler(obj, node, 'Enable'),
-    },
-    {
-      key: 'Delete',
-      label: 'Delete',
-      onClick: (obj) => clickHandler(obj, node, 'Delete'),
-    },
-  ];
+): MenuProps => {
+  return {
+    items: [
+      {
+        key: 'Controllers',
+        label: 'Add Controllers',
+        disabled:
+          node && Object(SCRIPT_NODE_RULE)[node.category]
+            ? !Object(SCRIPT_NODE_RULE)[node.category].includes('Controller')
+            : false,
+        children: [
+          {
+            key: 'LoopController',
+            label: 'Loop Controller',
+            onClick: (obj) => clickHandler(obj, node, 'Loop Controller'),
+          },
+          {
+            key: 'IfController',
+            label: 'If Controller',
+            onClick: (obj) => clickHandler(obj, node, 'If Controller'),
+          },
+        ],
+      },
+      {
+        key: 'Samplers',
+        label: 'Add Samplers',
+        disabled:
+          node && Object(SCRIPT_NODE_RULE)[node.category]
+            ? !Object(SCRIPT_NODE_RULE)[node.category].includes('Sampler')
+            : false,
+        children: [
+          {
+            key: 'HTTPSampler',
+            label: 'HTTP Sampler',
+            onClick: (obj) => clickHandler(obj, node, 'HTTP Sampler'),
+          },
+          {
+            key: 'HelloSampler',
+            label: 'Hello Sampler',
+            onClick: (obj) => clickHandler(obj, node, 'Hello Sampler'),
+          },
+        ],
+      },
+      {
+        key: 'Config',
+        label: 'Add Config',
+        disabled:
+          node && Object(SCRIPT_NODE_RULE)[node.category]
+            ? !Object(SCRIPT_NODE_RULE)[node.category].includes('Config')
+            : false,
+        children: [
+          {
+            key: 'Variable',
+            label: 'Variable',
+            onClick: (obj) => clickHandler(obj, node, 'Variable'),
+          },
+        ],
+      },
+      {
+        key: 'PostProcessor',
+        label: 'Add PostProcessor',
+        disabled:
+          node && Object(SCRIPT_NODE_RULE)[node.category]
+            ? !Object(SCRIPT_NODE_RULE)[node.category].includes('PostProcessor')
+            : false,
+        children: [
+          {
+            key: 'RegExpExtractor',
+            label: 'RegExp Extractor',
+            onClick: (obj) => clickHandler(obj, node, 'RegExp Extractor'),
+          },
+          {
+            key: 'JSONPathExtractor',
+            label: 'JSON-Path Extractor',
+            onClick: (obj) => clickHandler(obj, node, 'JSON-Path Extractor'),
+          },
+        ],
+      },
+      {
+        key: 'Assertion',
+        label: 'Add Assertion',
+        disabled:
+          node && Object(SCRIPT_NODE_RULE)[node.category]
+            ? !Object(SCRIPT_NODE_RULE)[node.category].includes('Assertion')
+            : false,
+        children: [
+          {
+            key: 'ResponseAssertion',
+            label: 'Response Assertion',
+            onClick: (obj) => clickHandler(obj, node, 'Response Assertion'),
+          },
+        ],
+      },
+      {
+        key: 'Enable',
+        label: node.enabled ? 'Disable' : 'Enable',
+        onClick: (obj) => clickHandler(obj, node, 'Enable'),
+      },
+      {
+        key: 'Delete',
+        label: 'Delete',
+        onClick: (obj) => clickHandler(obj, node, 'Delete'),
+      },
+    ],
+  };
 };
 
 const parseTreeDataFromXML = (xml: Element): ScriptTreeDataNode[] => {
